@@ -1,2 +1,2 @@
 # DEMO MINDEF MVC
-Base para programación MVC con php del Ministerio de la Defensa
+Examen parcial de Ingenieria de Software III
