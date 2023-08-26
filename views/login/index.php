@@ -12,6 +12,14 @@
                         <input type="password" class="form-control" id="usu_password" name="usu_password">
                     </div>
                 </div>
+                <div class="row mb-3">
+                <div class="col">
+                    <label class="form-check-label" for="show_password">
+                        <input type="checkbox" id="show_password">
+                        Mostrar Contraseña
+                    </label>
+                </div>
+            </div>
                 <div class="d-grid">
                     <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
                 </div>

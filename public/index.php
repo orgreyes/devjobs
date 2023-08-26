@@ -18,7 +18,7 @@ $router->get('/menu', [LoginController::class,'menu']);
 $router->get('/logout', [LoginController::class,'logout']);
 $router->post('/API/login', [LoginController::class,'loginAPI']);
 //!Rutas para El Registro de Uusarios
-$router->get('/registro', [LoginController::class,'registro']);
+$router->get('/registro', [LoginController::class,'indexx']);
 
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador

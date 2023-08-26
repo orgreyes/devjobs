@@ -22,7 +22,7 @@ class LoginController {
         }
     }
 
-    public static function registro(Router $router){
+    public static function indexx(Router $router){
 
         $router->render('registro/index', [
             'registro' => $registro,
@@ -74,4 +74,30 @@ class LoginController {
         session_destroy();
         header('Location: /devjobs/');
     }
+
+
+
+
+    public static function registroAPI(Router $router) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $nombre = $_POST['usu_nombre'];
+            $catalogo = $_POST['usu_catalogo'];
+            $password = $_POST['usu_password'];
+
+            // Hash de la contraseña
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+            // Aquí deberías realizar la validación y la inserción en la base de datos
+            // Por ejemplo, usar consultas preparadas para evitar inyecciones SQL
+
+            // Luego de guardar el usuario, redirige a la página de inicio de sesión
+            header('Location: /devjobs/login');
+            exit();
+        }
+
+        // Si no es una solicitud POST, renderiza la vista de registro
+        $router->render('registro/index', []);
+    }
+
+    // Resto de tus métodos...
 }

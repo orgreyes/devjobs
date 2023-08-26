@@ -1,6 +1,23 @@
-import { validarFormulario, Toast} from "../funciones";
+import { validarFormulario, Toast } from "../funciones";
 
-const formLogin = document.querySelector('form')
+const formLogin = document.querySelector('form');
+const show_password = document.getElementById('show_password');
+const formRegistro = document.getElementById('formRegistro');
+
+
+function togglePasswordVisibility() {
+    const passwordInput = document.getElementById("usu_password");
+    const showPasswordCheckbox = document.getElementById("show_password");
+
+    if (showPasswordCheckbox.checked) {
+        passwordInput.type = "text";
+    } else {
+        passwordInput.type = "password";
+    }
+}
+
+
+
 
 const login = async e => {
     e.preventDefault();
@@ -55,4 +72,4 @@ const login = async e => {
 }
 
 formLogin.addEventListener('submit', login );
-
+show_password.addEventListener('click', togglePasswordVisibility);
