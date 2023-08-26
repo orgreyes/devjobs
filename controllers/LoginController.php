@@ -22,6 +22,13 @@ class LoginController {
         }
     }
 
+    public static function registro(Router $router){
+
+        $router->render('registro/index', [
+            'registro' => $registro,
+        ]);
+    }
+
     public static function loginAPI(){
 
         $catalogo = filter_var($_POST['usu_catalogo'], FILTER_SANITIZE_NUMBER_INT);
