@@ -1,6 +1,6 @@
 <h2 class="text-center mb-4 text-primary">Inicio de Sesión</h2>
 <div class="row justify-content-center" >
-        <form class="col-lg-4 border rounded p-3">
+        <form id="formLogin" class="col-lg-4 border rounded p-3">
             <div class="row mb-3">
                 <div class="col">
                     <label for="usu_catalogo" class="form-label">Catálogo</label>

@@ -77,27 +77,60 @@ class LoginController {
 
 
 
-
-    public static function registroAPI(Router $router) {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nombre = $_POST['usu_nombre'];
-            $catalogo = $_POST['usu_catalogo'];
-            $password = $_POST['usu_password'];
-
-            // Hash de la contraseña
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-            // Aquí deberías realizar la validación y la inserción en la base de datos
-            // Por ejemplo, usar consultas preparadas para evitar inyecciones SQL
-
-            // Luego de guardar el usuario, redirige a la página de inicio de sesión
-            header('Location: /devjobs/login');
-            exit();
+    //!Funcion guardar
+    public static function guardarAPI(){
+        try {
+            $usuarioData = $_POST; 
+            
+            $nombreUsuario = $usuarioData['usu_nombre'];
+            $catalogoUsuario = $usuarioData['usu_catalogo'];
+            
+            // Verificar si ya existe un usuario con el mismo nombre o catálogo
+            $usuarioExistente = Usuario::fetchFirst("SELECT * FROM usuario WHERE usu_nombre = '$nombreUsuario' OR usu_catalogo = $catalogoUsuario");
+    
+            if ($usuarioExistente) {
+                if ($usuarioExistente['usu_nombre'] === $nombreUsuario) {
+                    echo json_encode([
+                        'mensaje' => 'El nombre de usuario ya existe',
+                        'codigo' => 2
+                    ]);
+                    return;
+                } elseif ($usuarioExistente['usu_catalogo'] == $catalogoUsuario) {
+                    echo json_encode([
+                        'mensaje' => 'El número de catálogo ya existe',
+                        'codigo' => 3
+                    ]);
+                    return;
+                }
+            }
+            
+            $password = filter_var($usuarioData['usu_password'], FILTER_DEFAULT);
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+            $usuarioData['usu_password'] = $hashedPassword;
+    
+            $usuario = new Usuario($usuarioData);
+            
+            $resultado = $usuario->crear();
+            if($resultado['resultado'] == 1){
+                echo json_encode([
+                    'mensaje' => 'Registro Enviado, Pendiente a ser Aprobado',
+                    'codigo' => 1
+                ]);
+            }else{
+                echo json_encode([
+                    'mensaje' => 'Ocurrio un error',
+                    'codigo' => 0
+                ]);
+            }
+                
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje'=> 'Ocurrio un Error',
+                'codigo' => 0
+            ]);
         }
-
-        // Si no es una solicitud POST, renderiza la vista de registro
-        $router->render('registro/index', []);
     }
-
-    // Resto de tus métodos...
+    
+    
 }

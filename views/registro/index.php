@@ -18,8 +18,8 @@
             </div>
             <div class="row mb-3">
                 <div class="col">
-                    <label for="usu_catalago" class="form-label">Catálogo</label>
-                    <input type="number" class="form-control" id="usu_catalago" name="usu_catalago" required>
+                    <label for="usu_catalogo" class="form-label">Catálogo</label>
+                    <input type="number" class="form-control" id="usu_catalogo" name="usu_catalogo" required>
                 </div>
             </div>
             <div class="row mb-3">
@@ -44,6 +44,6 @@
     <div class="mt-3">
         <p class="mb-0 text-center">¿Ya tiene una cuenta?<a href="/devjobs/" class="text-primary fw-bold ms-2">Iniciar Sesión</a></p>
     </div>
-    <script src="<?= asset('./build/js/login/index.js') ?>"></script>
+    <script src="<?= asset('./build/js/registro/index.js') ?>"></script>
 </body>
 </html>

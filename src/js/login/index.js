@@ -2,10 +2,10 @@ import { validarFormulario, Toast } from "../funciones";
 
 const formLogin = document.querySelector('form');
 const show_password = document.getElementById('show_password');
-const formRegistro = document.getElementById('formRegistro');
 
 
-function togglePasswordVisibility() {
+//!Funcion para mostrar la contraseña al usuario
+function ver_password() {
     const passwordInput = document.getElementById("usu_password");
     const showPasswordCheckbox = document.getElementById("show_password");
 
@@ -18,7 +18,7 @@ function togglePasswordVisibility() {
 
 
 
-
+//!Funcion deL login
 const login = async e => {
     e.preventDefault();
 
@@ -72,4 +72,4 @@ const login = async e => {
 }
 
 formLogin.addEventListener('submit', login );
-show_password.addEventListener('click', togglePasswordVisibility);
+show_password.addEventListener('click', ver_password);
