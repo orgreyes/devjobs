@@ -38,7 +38,7 @@ const getEstadisticas = async () => {
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
 
-        console.log("Respuesta de la API:", data); 
+        console.log("Datos que trae la grafica:", data); 
 
         if (data) {
             const activosCount = data.filter(registro => registro.estado === 'Activo  ').length;

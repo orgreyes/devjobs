@@ -91,4 +91,40 @@ class ListaController {
         ]);
         }
     }
-}
+
+    public static function modificarAPI() {
+        try {
+            $usuarioData = $_POST;
+            
+            // Hashing de la contraseña
+            if (isset($usuarioData['usu_password'])) {
+                $hashedPassword = password_hash($usuarioData['usu_password'], PASSWORD_DEFAULT);
+                $usuarioData['usu_password'] = $hashedPassword;
+            }
+    
+            // Establecer usu_situacion en código 1
+            $usuarioData['usu_situacion'] = 1;
+    
+            $usuario = new Usuario($usuarioData);
+            $resultado = $usuario->actualizar();
+    
+            if ($resultado['resultado'] == 1) {
+                echo json_encode([
+                    'mensaje' => 'Actualizacion de Datos Correcta',
+                    'codigo' => 1
+                ]);
+            } else {
+                echo json_encode([
+                    'mensaje' => 'Ocurrió un error',
+                    'codigo' => 0
+                ]);
+            }
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un Error',
+                'codigo' => 0
+            ]);
+        }
+    }
+}    

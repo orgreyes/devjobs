@@ -10,7 +10,12 @@
         <h1 class="text-center">Reporte de Usuarios activos e inactivos</h1>
         <div class="text-center">
             <button id="btnActualizar" class="btn btn-info">Actualizar</button>
+        </div><br>
+        <div class="text-center">
+            <a href="/devjobs/menu" class="btn btn-warning">Menu</a>
         </div>
+
+
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="card shadow mt-3">

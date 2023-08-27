@@ -36,6 +36,7 @@ $router->post('/API/activacion/activar', [ActivacionController::class,'activarAP
 $router->get('/lista', [ListaController::class,'index']);
 $router->get('/API/lista/buscar', [ListaController::class,'buscarAPI']);
 $router->post('/API/lista/eliminar', [ListaController::class,'eliminarAPI']);
+$router->post('/API/lista/modificar', [ListaController::class,'modificarAPI']);
 $router->post('/API/lista/desactivar', [ListaController::class,'desactivarAPI']);
 
 //!Rutas para Lista de usuarios desactivados
