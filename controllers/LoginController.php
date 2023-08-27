@@ -30,30 +30,41 @@ class LoginController {
     }
 
     public static function loginAPI(){
-
         $catalogo = filter_var($_POST['usu_catalogo'], FILTER_SANITIZE_NUMBER_INT);
         $password = filter_var($_POST['usu_password'], FILTER_DEFAULT);
-        $usuarioRegistrado = Usuario::fetchFirst("SELECT * FROM usuario where usu_catalogo = $catalogo");
-
+        $usuarioRegistrado = Usuario::fetchFirst("SELECT * FROM usuario WHERE usu_catalogo = $catalogo");
+    
         try {
-            if(is_array($usuarioRegistrado)){
+            if (is_array($usuarioRegistrado)) {
                 $verificacion = password_verify($password, $usuarioRegistrado['usu_password']);
                 $nombre = $usuarioRegistrado['usu_nombre'];
-                if($verificacion){
-                    session_start();
-                    $_SESSION['auth_user'] = $catalogo;
-
-                    echo json_encode([
-                        'codigo' => 1,
-                        'mensaje' => "Sesion iniciada correctamente. Bienvenido $nombre"
-                    ]);
-                }else{
+                $situacion = $usuarioRegistrado['usu_situacion'];
+    
+                if (!$verificacion) {
                     echo json_encode([
                         'codigo' => 2,
                         'mensaje' => 'Contraseña incorrecta'
                     ]);
+                } elseif ($situacion == 2) {
+                    echo json_encode([
+                        'codigo' => 3,
+                        'mensaje' => 'Usuario pendiente de activación'
+                    ]);
+                } elseif ($situacion == 3) {
+                    echo json_encode([
+                        'codigo' => 4,
+                        'mensaje' => 'Usuario desactivado'
+                    ]);
+                } elseif ($situacion == 1) {
+                    session_start();
+                    $_SESSION['auth_user'] = $catalogo;
+    
+                    echo json_encode([
+                        'codigo' => 1,
+                        'mensaje' => "Sesión iniciada correctamente. Bienvenido $nombre"
+                    ]);
                 }
-            }else{
+            } else {
                 echo json_encode([
                     'codigo' => 2,
                     'mensaje' => 'Usuario no encontrado'
@@ -67,6 +78,8 @@ class LoginController {
             ]);
         }
     }
+    
+    
 
     public static function logout(){
         $_SESSION = [];
