@@ -23,18 +23,18 @@ const datatable = new Datatable('#tablaUsuarios', {
             data: 'usu_catalogo',
         },
         {
-            title : 'ACTIVAR',
+            title : 'DESACTIVAR',
             data: 'usu_id',
             searchable: false,
             orderable: false,
-            render : (data, type, row, meta) => `<button class="btn btn-info" data-id='${data}' data-nombre='${row["usu_nombre"]}' data-catalogo='${row["usu_catalogo"]}'>Activar Usuario</button>`
+            render : (data, type, row, meta) => `<button class="btn btn-info" data-id='${data}' data-nombre='${row["usu_nombre"]}' data-catalogo='${row["usu_catalogo"]}'>Desactivar Usuario</button>`
         },
         {
             title : 'ELIMINAR',
             data: 'usu_id',
             searchable: false,
             orderable: false,
-            render : (data, type, row, meta) => `<button class="btn btn-danger" data-id='${data}'>Eliminar Solicitud</button>`
+            render : (data, type, row, meta) => `<button class="btn btn-danger" data-id='${data}'>Eliminar Usuario</button>`
         }
     ]
 })
@@ -45,7 +45,7 @@ const datatable = new Datatable('#tablaUsuarios', {
 const buscar = async () => {
     contenedor = 1;
 
-    const url = `/devjobs/API/activacion/buscar`;
+    const url = `/devjobs/API/lista/buscar`;
     const config = {
         method: 'GET'
     }
@@ -72,13 +72,13 @@ const buscar = async () => {
 
 
 //!Aca esta la funcion de Acticar un Usuario
-const activar = async e => {
+const desactivar = async e => {
     const result = await Swal.fire({
         icon: 'question',
-        title: 'Activar Usuario',
-        text: '¿Desea Activar a este Usuario?',
+        title: 'Desactivar Usuario',
+        text: '¿Desea Desactivar a este Usuario?',
         showCancelButton: true,
-        confirmButtonText: 'Activar',
+        confirmButtonText: 'Desactivar',
         cancelButtonText: 'Cancelar'
     });
 
@@ -90,7 +90,7 @@ const activar = async e => {
         const body = new FormData();
         body.append('usu_id', id);
 
-        const url = `/devjobs/API/activacion/activar`;
+        const url = `/devjobs/API/lista/desactivar`;
         const config = {
             method: 'POST',
             body,
@@ -108,7 +108,7 @@ const activar = async e => {
                     buscar();
                     Swal.fire({
                         icon: 'success',
-                        title: 'Activado Exitosamente',
+                        title: 'Desactivado Exitosamente',
                         text: mensaje,
                         confirmButtonText: 'OK'
                     });
@@ -133,7 +133,7 @@ const eliminar = async e => {
     const result = await Swal.fire({
         icon: 'question',
         title: 'Eliminar Usuario',
-        text: '¿Desea eliminar esta Solicituda?',
+        text: '¿Desea eliminar este Usuario?',
         showCancelButton: true,
         confirmButtonText: 'Eliminar',
         cancelButtonText: 'Cancelar'
@@ -147,7 +147,7 @@ const eliminar = async e => {
         const body = new FormData();
         body.append('usu_id', id);
         
-        const url = `/devjobs/API/activacion/eliminar`;
+        const url = `/devjobs/API/lista/eliminar`;
         const config = {
             method: 'POST',
             body,
@@ -183,7 +183,7 @@ const eliminar = async e => {
     }
 };
 
-datatable.on('click','.btn-info', activar)
+datatable.on('click','.btn-info', desactivar)
 datatable.on('click','.btn-danger', eliminar)
 buscar();
 
