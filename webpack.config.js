@@ -11,6 +11,7 @@ module.exports = {
     'js/activacion/index' : './src/js/activacion/index.js',
     'js/lista/index' : './src/js/lista/index.js',
     'js/desactivo/index' : './src/js/desactivo/index.js',
+    'js/lista/estadistica' : './src/js/lista/estadistica.js',
   },
   output: {
     filename: '[name].js',

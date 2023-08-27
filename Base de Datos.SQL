@@ -113,3 +113,16 @@ insert into usuario (usu_nombre, usu_catalogo, usu_password ) values
 insert into permiso (permiso_usuario, permiso_rol) values (1, 1);
 insert into permiso (permiso_usuario, permiso_rol) values (2, 1);
 
+
+--//!Query para el Reporte de los usuarios activo e inactivos
+SELECT
+    usu_id,
+    usu_nombre,
+    CASE
+        WHEN usu_id = 1 THEN 'Activo'
+        ELSE CASE usu_situacion
+            WHEN 1 THEN 'Activo'
+            ELSE 'Inactivo'
+        END
+    END AS estado
+FROM usuario;
