@@ -1,4 +1,5 @@
 import { validarFormulario, Toast } from "../funciones";
+import Swal from "sweetalert2";
 
 const show_password = document.getElementById('show_password');
 const formRegistro = document.getElementById('formRegistro');
