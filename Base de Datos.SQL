@@ -22,17 +22,3 @@ insert into usuario (usu_nombre, usu_catalogo, usu_password, usu_rol ) values
 ('CARLOS REYES', 664052, '$2y$10$Nz6/ESQw7b7xW1Q2j.WEM.g5LQ/NSSmHnhZpfolFAH.ltD0GGRKGS', 1);
 insert into usuario (usu_nombre, usu_catalogo, usu_password, usu_rol ) values 
 ('ABNER FUENTES', 623041, '$2y$10$Nz6/ESQw7b7xW1Q2j.WEM.g5LQ/NSSmHnhZpfolFAH.ltD0GGRKGS', 2);
-
-
---//!Query para el Reporte de los usuarios activo e inactivos
-SELECT
-    usu_id,
-    usu_nombre,
-    CASE
-        WHEN usu_id = 1 THEN 'Activo'
-        ELSE CASE usu_situacion
-            WHEN 1 THEN 'Activo'
-            ELSE 'Inactivo'
-        END
-    END AS estado
-FROM usuario;
