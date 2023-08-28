@@ -4,7 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Usuario</title>
-    <!-- Agrega tus enlaces a hojas de estilo o CDN aquí -->
+<style>
+    body {
+      padding-top: 56px;
+      position: relative;
+      min-height: 100vh;
+    }
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      padding: 10px 0;
+      background-color: #f8f9fa;
+    }
+  </style>
 </head>
 <body>
     <h2 class="text-center mb-4 text-primary">Registro de Usuario</h2>
@@ -44,6 +58,11 @@
     <div class="mt-3">
         <p class="mb-0 text-center">¿Ya tiene una cuenta?<a href="/devjobs/" class="text-primary fw-bold ms-2">Iniciar Sesión</a></p>
     </div>
+    <div class="container-fluid footer">
+  <p style="font-size: xx-small; font-weight: bold;">
+    Comando de Informática y Tecnología, <?= date('Y') ?> &copy;
+  </p>
+</div>
     <script src="<?= asset('./build/js/registro/index.js') ?>"></script>
 </body>
 </html>
