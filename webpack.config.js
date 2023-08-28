@@ -12,6 +12,7 @@ module.exports = {
     'js/lista/index' : './src/js/lista/index.js',
     'js/desactivo/index' : './src/js/desactivo/index.js',
     'js/lista/estadistica' : './src/js/lista/estadistica.js',
+    'js/reporte/estadistica' : './src/js/reporte/estadistica.js',
   },
   output: {
     filename: '[name].js',

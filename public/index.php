@@ -9,6 +9,7 @@ use Controllers\ActivacionController;
 use Controllers\ListaController;
 use Controllers\DesactivoController;
 use Controllers\DetalleController;
+use Controllers\ReporteController;
 
 
 $router = new Router();
@@ -48,5 +49,11 @@ $router->post('/API/desactivo/activar', [DesactivoController::class,'activarAPI'
 //!Rutas de Reporte de Cantidad de usuarios activos e inactivos
 $router->get('/lista/estadistica', [DetalleController::class,'index']);
 $router->get('/API/lista/estadistica', [DetalleController::class,'detalleEstadosAPI']);
+
+//!Rutas de Reporte de Cantidad de usuarios activos e inactivos
+$router->get('/reporte/estadistica', [ReporteController::class,'index']);
+$router->get('/API/reporte/estadistica', [ReporteController::class,'detalleEstadosAPI']);
+
+
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

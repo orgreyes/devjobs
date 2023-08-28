@@ -3,6 +3,15 @@ import { lenguaje } from "../lenguaje"
 import { validarFormulario, Toast } from "../funciones"
 import Swal from "sweetalert2";
 
+const formulario = document.querySelector('form');
+const btnActivar = document.getElementById('btnActivar');
+const btnCancelar = document.getElementById('btnCancelar');
+const tablaUsuariosContainer = document.getElementById('tablaUsuariosContainer');
+
+//!Ocultar el formulario al inicio
+formulario.style.display = 'none';
+tablaUsuariosContainer.style.display = 'block'; 
+
 let contenedor = 1;
 
 const datatable = new Datatable('#tablaUsuarios', {
@@ -183,7 +192,43 @@ const eliminar = async e => {
     }
 };
 
-datatable.on('click','.btn-info', activar)
+const mostrarFormulario = () => {
+    tablaUsuariosContainer.style.display = 'none';
+    formulario.style.display = 'block';
+};
+
+const ocultarFormulario = () => {
+    formulario.reset();
+    formulario.style.display = 'none';
+    tablaUsuariosContainer.style.display = 'block';
+};
+
+//!Para colocar los datos sobre el formulario
+const traeDatos = (e) => {
+    const button = e.target;
+    const id = button.dataset.id;
+    const nombre = button.dataset.nombre;
+    const catalogo = button.dataset.catalogo;
+
+    //! Llenar el formulario con los datos obtenidos
+    formulario.usu_id.value = id;
+    formulario.usu_nombre.value = nombre;
+    formulario.usu_catalogo.value = catalogo;
+}
+
+//!Aca esta la funcino de cancelar la accion de modificar un registro.
+const cancelarAccion = () => {
+    formulario.reset();
+    document.getElementById('tablaUsuariosContainer').style.display = 'block'; // Corrección aquí
+};
+
+datatable.on('click', '.btn-info', () => {
+    mostrarFormulario();
+    traeDatos(event);
+});
+btnActivar.addEventListener('click', activar)
+btnCancelar.addEventListener('click', ocultarFormulario);
+btnCancelar.addEventListener('click', cancelarAccion);
 datatable.on('click','.btn-danger', eliminar)
 buscar();
 
