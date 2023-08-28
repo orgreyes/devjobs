@@ -132,12 +132,23 @@ public static function buscarRoles(){
         try {
             $usuarioData = $_POST;
     
+            // Validar campos vacíos
+            foreach ($usuarioData as $campo => $valor) {
+                if (empty($valor)) {
+                    echo json_encode([
+                        'mensaje' => 'Debe llenar todos los campos',
+                        'codigo' => 0
+                    ]);
+                    return;
+                }
+            }
+    
             $usuario = new Usuario($usuarioData);
             $resultado = $usuario->actualizar();
     
             if ($resultado['resultado'] == 1) {
                 echo json_encode([
-                    'mensaje' => 'Asignacion de Rol Correcta',
+                    'mensaje' => 'Asignación de Rol Correcta',
                     'codigo' => 1
                 ]);
             } else {
@@ -154,4 +165,5 @@ public static function buscarRoles(){
             ]);
         }
     }
+    
 }

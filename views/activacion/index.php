@@ -11,7 +11,7 @@
                 <div class="row mb-3">
                     <div class="col">
                     <label for="usu_nombre">Nombre del Usuario</label>
-                        <input type="text" name="usu_nombre" id="usu_nombre" class="form-control>
+                        <input type="text" name="usu_nombre" id="usu_nombre" class="form-control" >
                     </div>
                 </div>
 

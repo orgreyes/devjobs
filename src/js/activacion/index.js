@@ -35,7 +35,7 @@ const datatable = new Datatable('#tablaUsuarios', {
             data: 'rol_nombre',
             render: (data, type, row) => {
                 if (type === 'display' && (data === null || data === '')) {
-                    return '<span style="color: red;">PENDIENTE A ASIGNAR</span>';
+                    return '<span style="color: red;">PENDIENTE</span>';
                 }
                 return data;
             },
@@ -45,7 +45,7 @@ const datatable = new Datatable('#tablaUsuarios', {
             data: 'usu_id',
             searchable: false,
             orderable: false,
-            render: (data, type, row, meta) => `<button class="btn btn-warning" data-id='${data}' data-nombre='${row["usu_nombre"]}' data-catalogo='${row["usu_catalogo"]}'>Asignara Rol</button>`
+            render: (data, type, row, meta) => `<button class="btn btn-warning" data-id='${data}' data-nombre='${row["usu_nombre"]}' data-catalogo='${row["usu_catalogo"]}'>Asignar Rol</button>`
         },
         {
             title: 'ACTIVAR',
@@ -281,11 +281,11 @@ const asignarol = async () => {
         switch (codigo) {
             case 1:
                 formulario.reset();
-                cancelarAccion(); // Corrección aquí
+                cancelarAccion();
                 buscar();
 
                 
-                ocultarFormulario(); // Ocultar el formulario
+                ocultarFormulario();
                 
                 Toast.fire({
                     icon: 'success',
@@ -296,9 +296,9 @@ const asignarol = async () => {
                 break;
             case 0:
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Verifique sus datos: ' + mensaje,
+                    icon: 'info',
+                    title: 'Campos incompletos',
+                    text: mensaje,
                     confirmButtonText: 'OK'
                 });
                 break;

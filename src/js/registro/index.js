@@ -17,7 +17,6 @@ function ver_password() {
 }
 
 
-//!Funcion de registrar usuarios.
 const guardar = async (e) => {
     e.preventDefault();
 
@@ -39,7 +38,6 @@ const guardar = async (e) => {
 
         switch (codigo) {
             case 1:
-                formRegistro.reset();
                 Toast.fire({
                     title: 'Registro Enviado',
                     text: 'Pendiente a ser Aprobado',
@@ -48,37 +46,38 @@ const guardar = async (e) => {
                     confirmCancelButtonColor: '#3085d6',
                     confirmButtonText: 'OK',
                 });
+                // Redirigir al menú de inicio
+                window.location.href = '/devjobs/';
                 break;
 
-                case 2:
-                    formRegistro.reset();
-                    Toast.fire({
-                        title: 'Usuario ya Existente',
-                        text: 'Ingrese otro usuario',
-                        icon: 'info',
-                        showCancelButton: false,
-                        confirmCancelButtonColor: '#3085d6',
-                        confirmButtonText: 'OK',
-                    });
-                    break;
-    
-                case 3:
-                    formRegistro.reset();
-                    Toast.fire({
-                        title: 'Catalogo  ya Existente',
-                        text: 'Ingrese otro catalogo',
-                        icon: 'info',
-                        showCancelButton: false,
-                        confirmCancelButtonColor: '#3085d6',
-                        confirmButtonText: 'OK',
-                    });
-                    break;
+            case 2:
+                Toast.fire({
+                    title: 'Usuario ya Existente',
+                    text: 'Ingrese otro usuario',
+                    icon: 'info',
+                    showCancelButton: false,
+                    confirmCancelButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                });
+                break;
+
+            case 3:
+                Toast.fire({
+                    title: 'Catalogo  ya Existente',
+                    text: 'Ingrese otro catalogo',
+                    icon: 'info',
+                    showCancelButton: false,
+                    confirmCancelButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                });
+                break;
         }
 
     } catch (error) {
         console.log(error);
     }
 };
+
 
 formRegistro.addEventListener('submit', guardar)
 show_password.addEventListener('click', ver_password);
