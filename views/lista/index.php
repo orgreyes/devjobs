@@ -21,13 +21,33 @@
                     </div>
                 </div>
 
+                <!-- //!Rol -->
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        <label for="usu_rol">Asignar Rol a Usuario</label>
+                        <select class="form-control" name="usu_rol" id="usu_rol">
+                            <option value="">Seleccione un Rol...</option>
+                            <?php foreach ($roles as $key => $rol) : ?>
+                                <option value="<?= $rol['rol_id'] ?>"> <?= $rol['rol_nombre'] ?></option>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
+                </div>
+
                 <!-- //!Contraseña -->
                 <div class="row mb-3">
                     <div class="col">
-                        <label for="usu_password">Contraseña</label>
-                        <input type="text" name="usu_password" id="usu_password" class="form-control">
+                        <label for="usu_password" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="usu_password" name="usu_password">
                     </div>
                 </div>
+                <div class="row mb-3">
+                <div class="col">
+                    <label class="form-check-label" for="show_password">
+                        <input type="checkbox" id="show_password">
+                        Mostrar Contraseña
+                    </label>
+                </div><br><br>
 
                 <div class="row mb-3">
                     <div class="col-lg-2">

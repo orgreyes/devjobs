@@ -19,7 +19,10 @@ class DesactivoController {
     public static function buscarAPI()
     {
 
-        $sql = "SELECT * FROM usuario WHERE usu_situacion = 3 ";
+        $sql = "SELECT u.usu_id, u.usu_nombre, u.usu_catalogo, u.usu_password, r.rol_nombre
+        FROM usuario u
+        LEFT JOIN rol r ON u.usu_rol = r.rol_id
+        WHERE u.usu_situacion = 3;";
 
         try {
 

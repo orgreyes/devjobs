@@ -7,6 +7,8 @@ const formulario = document.querySelector('form');
 const btnModificar = document.getElementById('btnModificar');
 const btnCancelar = document.getElementById('btnCancelar');
 const tablaUsuariosContainer = document.getElementById('tablaUsuariosContainer');
+const show_password = document.getElementById('show_password');
+
 
 //!Ocultar el formulario al inicio
 formulario.style.display = 'none';
@@ -31,19 +33,24 @@ const datatable = new Datatable('#tablaUsuarios', {
         {
             title : 'CATALOGO',
             data: 'usu_catalogo',
-        },{
-            title : 'CAMBIAR CONTRASEÑA',
+        },
+        {
+            title: 'ROL',
+            data: 'rol_nombre',
+        },
+        {
+            title : 'MODIFICAR DATOS',
             data: 'usu_id',
             searchable: false,
             orderable: false,
-            render : (data, type, row, meta) => `<button class="btn btn-warning" data-id='${data}' data-nombre='${row["usu_nombre"]}' data-catalogo='${row["usu_catalogo"]}'>Modificar Contraseña</button>`
+            render : (data, type, row, meta) => `<button class="btn btn-warning" data-id='${data}'data-nombre='${row["usu_nombre"]}'data-catalogo='${row["usu_catalogo"]}'data-rol='${row["rol_nombre"]}'>Modificar Datos del Usuario</button>`
         },
         {
             title : 'DESACTIVAR',
             data: 'usu_id',
             searchable: false,
             orderable: false,
-            render : (data, type, row, meta) => `<button class="btn btn-info" data-id='${data}' data-nombre='${row["usu_nombre"]}' data-catalogo='${row["usu_catalogo"]}'>Desactivar Usuario</button>`
+            render : (data, type, row, meta) => `<button class="btn btn-info" data-id='${data}' data-nombre='${row["usu_nombre"]}' data-catalogo='${row["usu_catalogo"]}'data-rol='${row["rol_nombre"]}'>Desactivar Usuario</button>`
         },
         {
             title : 'ELIMINAR',
@@ -217,10 +224,12 @@ const traeDatos = (e) => {
     const nombre = button.dataset.nombre;
     const catalogo = button.dataset.catalogo;
 
+
     //! Llenar el formulario con los datos obtenidos
     formulario.usu_id.value = id;
     formulario.usu_nombre.value = nombre;
     formulario.usu_catalogo.value = catalogo;
+
 }
 
 //!Aca esta la funcino de cancelar la accion de modificar un registro.
@@ -265,9 +274,9 @@ const modificar = async () => {
                 break;
             case 0:
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Verifique sus datos: ' + mensaje,
+                    icon: 'info',
+                    title: 'Campo Vacio',
+                    text: mensaje,
                     confirmButtonText: 'OK'
                 });
                 break;
@@ -281,6 +290,19 @@ const modificar = async () => {
 };
 
 
+//!Funcion para mostrar la contraseña al usuario
+function ver_password() {
+    const passwordInput = document.getElementById("usu_password");
+    const showPasswordCheckbox = document.getElementById("show_password");
+
+    if (showPasswordCheckbox.checked) {
+        passwordInput.type = "text";
+    } else {
+        passwordInput.type = "password";
+    }
+}
+
+
 datatable.on('click', '.btn-warning', () => {
     mostrarFormulario();
     traeDatos(event);
@@ -291,6 +313,7 @@ btnCancelar.addEventListener('click', cancelarAccion);
 datatable.on('click','.btn-warning', traeDatos)
 datatable.on('click','.btn-info', desactivar)
 datatable.on('click','.btn-danger', eliminar)
+show_password.addEventListener('click', ver_password);
 buscar();
 
 

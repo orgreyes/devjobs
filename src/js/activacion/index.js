@@ -3,50 +3,67 @@ import { lenguaje } from "../lenguaje"
 import { validarFormulario, Toast } from "../funciones"
 import Swal from "sweetalert2";
 
+
 const formulario = document.querySelector('form');
-const btnActivar = document.getElementById('btnActivar');
+const btnAsignarRol = document.getElementById('btnAsignarRol');
 const btnCancelar = document.getElementById('btnCancelar');
 const tablaUsuariosContainer = document.getElementById('tablaUsuariosContainer');
+let contenedor = 1;
 
 //!Ocultar el formulario al inicio
 formulario.style.display = 'none';
 tablaUsuariosContainer.style.display = 'block'; 
 
-let contenedor = 1;
-
 const datatable = new Datatable('#tablaUsuarios', {
-    language : lenguaje,
-    data : null,
-    columns : [
+    language: lenguaje,
+    data: null,
+    columns: [
         {
-            title : 'NO',
-            render: () => contenedor++ 
-            
+            title: 'NO',
+            render: () => contenedor++
         },
         {
-            title : 'USUARIO',
+            title: 'USUARIO',
             data: 'usu_nombre'
         },
         {
-            title : 'CATALOGO',
+            title: 'CATALOGO',
             data: 'usu_catalogo',
         },
         {
-            title : 'ACTIVAR',
-            data: 'usu_id',
-            searchable: false,
-            orderable: false,
-            render : (data, type, row, meta) => `<button class="btn btn-info" data-id='${data}' data-nombre='${row["usu_nombre"]}' data-catalogo='${row["usu_catalogo"]}'>Activar Usuario</button>`
+            title: 'ROL',
+            data: 'rol_nombre',
+            render: (data, type, row) => {
+                if (type === 'display' && (data === null || data === '')) {
+                    return '<span style="color: red;">PENDIENTE A ASIGNAR</span>';
+                }
+                return data;
+            },
         },
         {
-            title : 'ELIMINAR',
+            title: 'ASIGNAR ROL',
             data: 'usu_id',
             searchable: false,
             orderable: false,
-            render : (data, type, row, meta) => `<button class="btn btn-danger" data-id='${data}'>Eliminar Solicitud</button>`
+            render: (data, type, row, meta) => `<button class="btn btn-warning" data-id='${data}' data-nombre='${row["usu_nombre"]}' data-catalogo='${row["usu_catalogo"]}'>Asignara Rol</button>`
+        },
+        {
+            title: 'ACTIVAR',
+            data: 'usu_id',
+            searchable: false,
+            orderable: false,
+            render: (data, type, row, meta) => `<button class="btn btn-info" data-id='${data}' data-nombre='${row["usu_nombre"]}' data-catalogo='${row["usu_catalogo"]}'>Activar Usuario</button>`
+        },
+        {
+            title: 'ELIMINAR',
+            data: 'usu_id',
+            searchable: false,
+            orderable: false,
+            render: (data, type, row, meta) => `<button class="btn btn-danger" data-id='${data}'>Eliminar Solicitud</button>`
         }
     ]
-})
+});
+
 
 
 
@@ -82,6 +99,21 @@ const buscar = async () => {
 
 //!Aca esta la funcion de Acticar un Usuario
 const activar = async e => {
+    const button = e.target;
+    const id = button.dataset.id;
+
+    // Verificar si el usuario tiene un rol asignado antes de activar
+    const rolNombre = button.dataset.rolNombre;
+    if (rolNombre === '' || rolNombre === null) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Rol no asignado',
+            text: 'El usuario aún no tiene un rol asignado.',
+            confirmButtonText: 'OK'
+        });
+        return; // Detener el proceso
+    }
+
     const result = await Swal.fire({
         icon: 'question',
         title: 'Activar Usuario',
@@ -91,10 +123,6 @@ const activar = async e => {
         cancelButtonText: 'Cancelar'
     });
 
-    const button = e.target;
-    const id = button.dataset.id
-    // alert(id);
-    
     if (result.isConfirmed) {
         const body = new FormData();
         body.append('usu_id', id);
@@ -111,7 +139,6 @@ const activar = async e => {
             console.log(data);
             const { codigo, mensaje, detalle } = data;
 
-            let icon='info'
             switch (codigo) {
                 case 1:
                     buscar();
@@ -121,6 +148,15 @@ const activar = async e => {
                         text: mensaje,
                         confirmButtonText: 'OK'
                     });
+                    break;
+                    case 2:
+                        buscar();
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'No se puede activar el usuario sin un rol asignado',
+                            text: mensaje,
+                            confirmButtonText: 'OK'
+                        });
                     break;
                 case 0:
                     console.log(detalle);
@@ -134,6 +170,7 @@ const activar = async e => {
         }
     }
 };
+
 
 
 
@@ -203,6 +240,7 @@ const ocultarFormulario = () => {
     tablaUsuariosContainer.style.display = 'block';
 };
 
+
 //!Para colocar los datos sobre el formulario
 const traeDatos = (e) => {
     const button = e.target;
@@ -222,13 +260,68 @@ const cancelarAccion = () => {
     document.getElementById('tablaUsuariosContainer').style.display = 'block'; // Corrección aquí
 };
 
-datatable.on('click', '.btn-info', () => {
+//!Aca esta la funcion de modificar un registro
+const asignarol = async () => {
+    const usu_id = formulario.usu_id.value;
+    const body = new FormData(formulario);
+    body.append('usu_id', usu_id);
+
+    const url = `/devjobs/API/activacion/asignarol`;
+    const config = {
+        method: 'POST',
+        body,
+    };
+
+    try {
+        const respuesta = await fetch(url, config);
+        const data = await respuesta.json();
+        console.log(data);
+        const { codigo, mensaje, detalle } = data;
+
+        switch (codigo) {
+            case 1:
+                formulario.reset();
+                cancelarAccion(); // Corrección aquí
+                buscar();
+
+                
+                ocultarFormulario(); // Ocultar el formulario
+                
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Rol Asignado',
+                    text: mensaje,
+                    confirmButtonText: 'OK'
+                });
+                break;
+            case 0:
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Verifique sus datos: ' + mensaje,
+                    confirmButtonText: 'OK'
+                });
+                break;
+            default:
+                break;
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+datatable.on('click', '.btn-warning', () => {
     mostrarFormulario();
     traeDatos(event);
 });
-btnActivar.addEventListener('click', activar)
+
+
 btnCancelar.addEventListener('click', ocultarFormulario);
+btnAsignarRol.addEventListener('click', asignarol);
 btnCancelar.addEventListener('click', cancelarAccion);
+datatable.on('click','.btn-warning', traeDatos)
+datatable.on('click','.btn-info', activar)
 datatable.on('click','.btn-danger', eliminar)
 buscar();
 

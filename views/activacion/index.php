@@ -1,3 +1,5 @@
+
+<!-- //!FORMULARIO DE ASIGNACION DE ROLES A USARIOS PENDIENTES A ACTIVAR. -->
 <h1 class="text-center">Solicitudes de Activacion de Cuenta de Usuarios</h1>
 <br>
 <div class="row justify-content-center">
@@ -9,7 +11,7 @@
                 <div class="row mb-3">
                     <div class="col">
                     <label for="usu_nombre">Nombre del Usuario</label>
-                        <input type="text" name="usu_nombre" id="usu_nombre" class="form-control" >
+                        <input type="text" name="usu_nombre" id="usu_nombre" class="form-control>
                     </div>
                 </div>
 
@@ -38,7 +40,7 @@
 
                 <div class="row mb-3">
                     <div class="col-lg-2">
-                        <button type="button" id="btnActivar" class="btn btn-info w-100">Activar</button>
+                        <button type="button" id="btnAsignarRol" class="btn btn-warning w-100">Asignar Rol</button>
                     </div>
                     <div class="col-lg-2">
                         <button type="button" id="btnCancelar" class="btn btn-danger w-100">Cancelar</button>
@@ -48,6 +50,7 @@
             </form>
         </div>
 
+        
         <br><center>
             <a href="/devjobs/menu" class="btn btn-warning">Menu</a>
         </center>

@@ -32,6 +32,7 @@ $router->get('/activacion', [ActivacionController::class,'index']);
 $router->get('/API/activacion/buscar', [ActivacionController::class,'buscarAPI']);
 $router->post('/API/activacion/eliminar', [ActivacionController::class,'eliminarAPI']);
 $router->post('/API/activacion/activar', [ActivacionController::class,'activarAPI']);
+$router->post('/API/activacion/asignarol', [ActivacionController::class,'asignarolAPI']);
 
 //!Rutas para Lista de usuarios
 $router->get('/lista', [ListaController::class,'index']);

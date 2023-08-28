@@ -23,6 +23,10 @@ const datatable = new Datatable('#tablaUsuarios', {
             data: 'usu_catalogo',
         },
         {
+            title: 'ROL',
+            data: 'rol_nombre',
+        },
+        {
             title : 'ACTIVAR',
             data: 'usu_id',
             searchable: false,
